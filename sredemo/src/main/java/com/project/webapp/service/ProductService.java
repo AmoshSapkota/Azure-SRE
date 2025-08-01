@@ -44,9 +44,6 @@ public class ProductService {
             if (updates.getCategory() != null && !updates.getCategory().isEmpty()) {
                 existing.setCategory(updates.getCategory());
             }
-            if (updates.getImageUrl() != null && !updates.getImageUrl().isEmpty()) {
-                existing.setImageUrl(updates.getImageUrl());
-            }
             repo.save(existing);
         }
     }
