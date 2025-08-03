@@ -33,3 +33,5 @@ build/
 .vscode/
 #h2 database files
 data/
+#environment variable
+.env
