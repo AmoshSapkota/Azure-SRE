@@ -71,7 +71,7 @@ A complete **Azure SRE demonstration** featuring a Spring Boot application with 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
 | **Runtime** | Java 21, Spring Boot 3.x | Modern Java application platform |
-| **Database** | H2 Database, Spring Data JPA | Lightweight persistence layer |
+| **Database** | PostgreSQL Database, Spring Data JPA | Lightweight persistence layer |
 | **Testing** | JUnit 5, Mockito, TestContainers | Comprehensive test coverage |
 | **Monitoring** | OpenTelemetry, Application Insights | Azure-native observability |
 | **Build** | Maven 3.x, Spring Boot Maven Plugin | Build automation and packaging |
