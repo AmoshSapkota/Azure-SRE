@@ -11,7 +11,7 @@ A complete **Azure SRE demonstration** featuring a Spring Boot application with 
 ### **Application Architecture**
 - ✅ **Spring Boot 3.x** with Java 21 runtime
 - ✅ **RESTful Product API** with full CRUD operations (`/api/products`)
-- ✅ **H2 Database** with file persistence and web console
+- ✅ **PostgreSQL Database** with persistence storage
 - ✅ **Spring Data JPA** for data access layer
 - ✅ **Spring Boot Actuator** for health checks and metrics
 - ✅ **Lombok** for clean entity models
@@ -53,7 +53,7 @@ A complete **Azure SRE demonstration** featuring a Spring Boot application with 
 │   Spring Boot App   │───▶│  OpenTelemetry Agent │───▶│ Application Insights│
 │   - REST API        │    │  - Auto Instrumentation │    │ - Live Metrics      │
 │   - Business Logic  │    │  - Custom Metrics    │    │ - Application Map   │
-│   - H2 Database     │    │  - Distributed Traces│    │ - Performance Data  │
+│   - PostgreSQL Database     │    │  - Distributed Traces│    │ - Performance Data  │
 └─────────────────────┘    └──────────────────────┘    └─────────────────────┘
                                                                 │
                                                                 ▼
@@ -184,7 +184,7 @@ Test Coverage Strategy
 
 ### **Key Testing Features**
 - **Mock Dependency Injection**: Service layer tests with `@Mock` and `@InjectMocks`
-- **Database Testing**: Real H2 database integration with `@DataJpaTest`
+- **Database Testing**: Real PostgreSQL database integration with `@DataJpaTest`
 - **REST API Validation**: Complete HTTP endpoint testing with MockMvc
 - **Exception Handling**: Error scenario coverage and boundary testing
 - **Cross-Platform Execution**: Windows (`run-tests.bat`) and Linux (`run-tests.sh`) scripts
