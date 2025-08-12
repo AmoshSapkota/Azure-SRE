@@ -31,7 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
-#h2 database files
+#database files
 data/
 #environment variable
 .env
+#question
+question.txt
+#log files for local dev
+logs/

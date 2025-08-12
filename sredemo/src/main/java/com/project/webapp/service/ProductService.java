@@ -2,24 +2,21 @@ package com.project.webapp.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-// Manual OpenTelemetry SDK imports for custom telemetry
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.GlobalOpenTelemetry;
-import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.StatusCode;
-import io.opentelemetry.api.metrics.Meter;
-import io.opentelemetry.api.metrics.LongCounter;
-import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.common.AttributeKey;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.webapp.model.Product;
 import com.project.webapp.repository.ProductRepo;
+
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.metrics.LongCounter;
+import io.opentelemetry.api.metrics.Meter;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.StatusCode;
+import io.opentelemetry.api.trace.Tracer;
  
 @Service
 public class ProductService {
@@ -32,7 +29,7 @@ public class ProductService {
     // Manual OpenTelemetry SDK setup (works with agent)
     private final OpenTelemetry openTelemetry = GlobalOpenTelemetry.get();
     private final Tracer tracer = openTelemetry.getTracer("azure-sre-demo", "1.0.0");
-    private final Meter meter = openTelemetry.getMeter("azure-sre-demo", "1.0.0");
+    private final Meter meter = openTelemetry.getMeter("azure-sre-demo");
     
     // Custom business metrics
     private final LongCounter productRetrievalCounter = meter
@@ -123,7 +120,7 @@ public class ProductService {
         }
     }
 
-    public void addProduct(Product prod) {
+    public Product addProduct(Product prod) {
         // Custom span with product creation context
         Span span = tracer.spanBuilder("create-product")
             .setAttribute("product.name", prod.getProdName())
@@ -136,19 +133,21 @@ public class ProductService {
             logger.info("Adding new product: {} (Category: {}, Price: {})", 
                 prod.getProdName(), prod.getCategory(), prod.getPrice());
             
-            repo.save(prod);
+            Product savedProduct = repo.save(prod);
             
             // Custom business metrics
             productCreationCounter.add(1);
             
             // Add success attributes to span
-            span.setAttribute("product.id", prod.getProdId());
+            span.setAttribute("product.id", savedProduct.getProdId());
             span.setAttribute("operation.success", true);
             span.setStatus(StatusCode.OK);
             
             // Structured logging with business metrics
             logger.info("Successfully added product: {} with ID: {}", 
-                prod.getProdName(), prod.getProdId());
+                savedProduct.getProdName(), savedProduct.getProdId());
+                
+            return savedProduct;
                 
         } catch (Exception e) {
             span.setAttribute("operation.success", false);
@@ -161,7 +160,7 @@ public class ProductService {
         }
     }
     
-    public void updateProduct(int prodId, Product prod) {
+    public Product updateProduct(int prodId, Product prod) {
         // Custom span for update operations
         Span span = tracer.spanBuilder("update-product")
             .setAttribute("product.id", prodId)
@@ -173,12 +172,13 @@ public class ProductService {
             logger.info("Updating product with ID: {} to name: {}", prodId, prod.getProdName());
             
             prod.setProdId(prodId);
-            repo.save(prod);
+            Product updatedProduct = repo.save(prod);
             
             span.setAttribute("operation.success", true);
             span.setStatus(StatusCode.OK);
             
             logger.info("Successfully updated product with ID: {}", prodId);
+            return updatedProduct;
         } catch (Exception e) {
             span.setAttribute("operation.success", false);
             span.recordException(e);
@@ -218,7 +218,7 @@ public class ProductService {
     }
     
     // Partial update for PATCH - only updates non-null/non-zero fields
-    public void updateProductPartially(int prodId, Product updates) {
+    public Product updateProductPartially(int prodId, Product updates) {
         Span span = tracer.spanBuilder("update-product-partially")
             .setAttribute("product.id", prodId)
             .setAttribute("operation.type", "database.patch")
@@ -248,21 +248,22 @@ public class ProductService {
                 }
                 
                 if (hasUpdates) {
-                    repo.save(existing);
+                    Product savedProduct = repo.save(existing);
                     span.setAttribute("operation.success", true);
                     span.setAttribute("fields.updated", hasUpdates);
                     logger.info("Successfully partially updated product with ID: {}", prodId);
+                    return savedProduct;
                 } else {
                     span.setAttribute("operation.success", true);
                     span.setAttribute("fields.updated", false);
                     logger.info("No updates applied to product with ID: {}", prodId);
+                    return existing;
                 }
             } else {
                 span.setAttribute("product.found", false);
                 logger.warn("Product not found for partial update with ID: {}", prodId);
+                return null;
             }
-            
-            span.setStatus(StatusCode.OK);
         } catch (Exception e) {
             span.setAttribute("operation.success", false);
             span.recordException(e);

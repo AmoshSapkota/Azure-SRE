@@ -2,7 +2,11 @@ package com.project.webapp.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,22 +15,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-// OpenTelemetry imports for custom controller telemetry
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.GlobalOpenTelemetry;
-import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.StatusCode;
-import io.opentelemetry.api.metrics.Meter;
-import io.opentelemetry.api.metrics.LongCounter;
 
 import com.project.webapp.model.Product;
 import com.project.webapp.service.ProductService;
+
+import io.opentelemetry.api.GlobalOpenTelemetry;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.metrics.LongCounter;
+import io.opentelemetry.api.metrics.Meter;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.StatusCode;
+import io.opentelemetry.api.trace.Tracer;
 
 @RestController
 public class ProductController {
@@ -123,30 +122,40 @@ public class ProductController {
             span.end();
         }
     }
-    }
 
     // using @PostMapping for post operation as @RequestMapping is get by default
     @PostMapping("/products")
-    public String addProduct(@RequestBody Product prod) {
-        service.addProduct(prod);
-        return "Product added Successfully";
+    public ResponseEntity<Product> addProduct(@RequestBody Product prod) {
+        try {
+            // Basic validation
+            if (prod.getProdName() == null || prod.getProdName().trim().isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            }
+            if (prod.getPrice() < 0) {
+                return ResponseEntity.badRequest().build();
+            }
+            
+            Product savedProduct = service.addProduct(prod);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
     @PutMapping("/products/{prodId}")
-    public String updateProduct(@PathVariable int prodId, @RequestBody Product prod){
-        service.updateProduct(prodId, prod);
-        return "Product updated Successfully!";
-
+    public ResponseEntity<Product> updateProduct(@PathVariable int prodId, @RequestBody Product prod){
+        Product updatedProduct = service.updateProduct(prodId, prod);
+        return ResponseEntity.ok(updatedProduct);
     }
     @DeleteMapping("/products/{prodId}")
-    public String deleteProduct(@PathVariable int prodId){
+    public ResponseEntity<Void> deleteProduct(@PathVariable int prodId){
         service.deleteProduct(prodId);
-        return "Product deleted Successfully!";
+        return ResponseEntity.noContent().build();
     }
     //do patch mapping to update single product (partial update)
     @PatchMapping("/products/{prodId}")
-    public String updateProductPartially(@PathVariable int prodId, @RequestBody Product prod) {
-        service.updateProductPartially(prodId, prod);
-        return "Product updated Successfully!";
+    public ResponseEntity<Product> updateProductPartially(@PathVariable int prodId, @RequestBody Product prod) {
+        Product updatedProduct = service.updateProductPartially(prodId, prod);
+        return ResponseEntity.ok(updatedProduct);
     }
 
 }

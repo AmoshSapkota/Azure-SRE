@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**
@@ -118,7 +117,7 @@ class ProductServiceTest {
     @DisplayName("Should add new product successfully")
     void testAddProduct() {
         // Given
-        doNothing().when(productRepo).save(any(Product.class));
+        when(productRepo.save(any(Product.class))).thenReturn(testProduct);
 
         // When
         productService.addProduct(testProduct);
@@ -134,9 +133,10 @@ class ProductServiceTest {
         doThrow(new IllegalArgumentException("Product cannot be null")).when(productRepo).save(null);
 
         // When & Then
-        assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             productService.addProduct(null);
         });
+        assertEquals("Product cannot be null", exception.getMessage());
         
         verify(productRepo, times(1)).save(null);
     }
@@ -146,7 +146,7 @@ class ProductServiceTest {
     void testUpdateProduct() {
         // Given
         Product updatedProduct = new Product(1, "Updated Laptop", 1500, "Electronics");
-        doNothing().when(productRepo).save(any(Product.class));
+        when(productRepo.save(any(Product.class))).thenReturn(updatedProduct);
 
         // When
         productService.updateProduct(1, updatedProduct);
@@ -222,7 +222,7 @@ class ProductServiceTest {
         Product updates = new Product(0, "New Laptop", 1200, null);
         
         when(productRepo.findById(1)).thenReturn(Optional.of(existing));
-        doNothing().when(productRepo).save(any(Product.class));
+        when(productRepo.save(any(Product.class))).thenReturn(existing);
 
         // When
         productService.updateProductPartially(1, updates);
@@ -312,7 +312,7 @@ class ProductServiceTest {
     @DisplayName("Should verify method interactions in correct order")
     void testMethodCallOrder() {
         // Given
-        doNothing().when(productRepo).save(any(Product.class));
+        when(productRepo.save(any(Product.class))).thenReturn(testProduct);
         when(productRepo.findById(1)).thenReturn(Optional.of(testProduct));
 
         // When
