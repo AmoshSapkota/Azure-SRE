@@ -129,16 +129,14 @@ class ProductServiceTest {
     @Test
     @DisplayName("Should handle null product when adding")
     void testAddNullProduct() {
-        // Given
-        doThrow(new IllegalArgumentException("Product cannot be null")).when(productRepo).save(null);
-
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             productService.addProduct(null);
         });
         assertEquals("Product cannot be null", exception.getMessage());
         
-        verify(productRepo, times(1)).save(null);
+        // Repository should never be called with null input
+        verify(productRepo, never()).save(any());
     }
 
     @Test
