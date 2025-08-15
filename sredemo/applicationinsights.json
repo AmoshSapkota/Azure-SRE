@@ -1,0 +1,40 @@
+{
+  "connectionString": "InstrumentationKey=dc680e87-cda2-4448-9a32-c1eb7250f30e;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/",
+  "role": {
+    "name": "azure-sre-demo",
+    "instance": "local-dev"
+  },
+  "sampling": {
+    "percentage": 100
+  },
+  "preview": {
+    "liveMetrics": {
+      "enabled": true
+    },
+    "processors": [
+      {
+        "type": "attribute",
+        "actions": [
+          {
+            "key": "service.name",
+            "value": "azure-sre-demo",
+            "action": "insert"
+          },
+          {
+            "key": "service.version", 
+            "value": "1.0.0",
+            "action": "insert"
+          }
+        ]
+      }
+    ]
+  },
+  "instrumentation": {
+    "logging": {
+      "level": "INFO"
+    },
+    "micrometer": {
+      "enabled": true
+    }
+  }
+}

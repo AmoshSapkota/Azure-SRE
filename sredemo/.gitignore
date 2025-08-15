@@ -39,3 +39,4 @@ data/
 question.txt
 #log files for local dev
 logs/
+applicationinsights.log

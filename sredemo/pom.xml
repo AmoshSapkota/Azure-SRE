@@ -55,8 +55,8 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         
-        <!-- Application Insights dependencies are included with the agent -->
-        
+        <!-- Application Insights Java Agent Integration -->
+        <!-- Auto-instrumentation will be handled by Java agent if present -->
         
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -132,10 +132,11 @@
             <version>${opentelemetry.version}</version>
         </dependency>
         
+        <!-- Azure Monitor OpenTelemetry Exporter for custom telemetry -->
         <dependency>
-            <groupId>io.opentelemetry.instrumentation</groupId>
-            <artifactId>opentelemetry-spring-boot-starter</artifactId>
-            <version>${opentelemetry-instrumentation.version}</version>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-monitor-opentelemetry-exporter</artifactId>
+            <version>1.0.0-beta.25</version>
         </dependency>
         
         <!-- Spring DotEnv for loading .env files -->

@@ -1,23 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(./mvnw:*)",
-      "Bash(java:*)",
-      "Bash(SERVER_PORT=8083 ./mvnw spring-boot:run)",
-      "Bash(for i in {1..5})",
-      "Bash(curl:*)",
-      "Bash(done)",
-      "Bash(az account:*)",
-      "Bash(az postgres flexible-server create:*)",
-      "Bash(az postgres flexible-server firewall-rule create:*)",
-      "Bash(az postgres flexible-server delete:*)",
-      "Bash(az postgres flexible-server show:*)",
-      "Bash(timeout:*)",
-      "Bash(az postgres flexible-server db create:*)",
-      "Bash(az:*)"
+      "Bash(JAVA_OPTS=\"-javaagent:./applicationinsights-agent.jar\" ./mvnw spring-boot:run)",
+      "Bash(for i in {1..10})"
     ],
     "deny": [],
-    "ask": [],
-    "defaultMode": "acceptEdits"
+    "ask": []
   }
 }
