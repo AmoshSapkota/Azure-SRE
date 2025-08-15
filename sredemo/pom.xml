@@ -107,6 +107,37 @@
             <version>42.7.7</version>
         </dependency>
         
+        <!-- OpenTelemetry SDK for custom telemetry -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-api</artifactId>
+            <version>${opentelemetry.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk</artifactId>
+            <version>${opentelemetry.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-metrics</artifactId>
+            <version>${opentelemetry.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-trace</artifactId>
+            <version>${opentelemetry.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-spring-boot-starter</artifactId>
+            <version>${opentelemetry-instrumentation.version}</version>
+        </dependency>
+        
         <!-- Spring DotEnv for loading .env files -->
         <dependency>
             <groupId>me.paulschwarz</groupId>
@@ -114,49 +145,4 @@
             <version>4.0.0</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <agents>
-                        <agent>${project.build.directory}/applicationinsights-agent.jar</agent>
-                    </agents>
-                    <systemPropertyVariables>
-                        <APPLICATIONINSIGHTS_SELF_DIAGNOSTICS_LEVEL>INFO</APPLICATIONINSIGHTS_SELF_DIAGNOSTICS_LEVEL>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-            
-            <!-- Download Application Insights Java Agent -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-agent</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>com.microsoft.azure</groupId>
-                                    <artifactId>applicationinsights-agent</artifactId>
-                                    <version>3.6.2</version>
-                                    <type>jar</type>
-                                    <outputDirectory>${project.build.directory}</outputDirectory>
-                                    <destFileName>applicationinsights-agent.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

@@ -13,7 +13,8 @@
       "Bash(az postgres flexible-server delete:*)",
       "Bash(az postgres flexible-server show:*)",
       "Bash(timeout:*)",
-      "Bash(az postgres flexible-server db create:*)"
+      "Bash(az postgres flexible-server db create:*)",
+      "Bash(az:*)"
     ],
     "deny": [],
     "ask": [],
