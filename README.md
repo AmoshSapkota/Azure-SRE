@@ -1,10 +1,16 @@
-# Azure SRE: Java Spring Boot Application with Comprehensive Monitoring & Testing
+# Azure SRE Demo Project
 
-This repository contains a **production-ready Java Spring Boot application** deployed on Azure Virtual Machine (VM) demonstrating **Azure Site Reliability Engineering (SRE)** best practices with comprehensive monitoring, automated testing, and secure deployment workflows.
+A comprehensive demonstration of Site Reliability Engineering practices on Azure, showcasing **hybrid telemetry implementation** with Azure Monitor and OpenTelemetry SDK.
 
 ## 📋 **Project Overview**
 
-A complete **Azure SRE demonstration** featuring a Spring Boot application with Product CRUD operations, integrated with **Application Insights**, **Log Analytics Workspace**, **OpenTelemetry instrumentation**, and **comprehensive testing suite** (65+ test cases with Mockito). Built for **Azure VM deployment** with automated setup scripts and secure credential management.
+This repository demonstrates a production-ready Spring Boot application with **hybrid telemetry architecture** that combines:
+
+- **Application Insights Java Agent**: Auto-instrumentation for HTTP requests, database calls, and JVM metrics
+- **OpenTelemetry SDK**: Custom business metrics, product operation tracking, and pricing analytics
+- **Azure Monitor Integration**: Live metrics, application map, and distributed tracing
+- **PostgreSQL Database**: Production-ready data persistence with Azure Database for PostgreSQL
+- **Comprehensive Testing**: 65+ test cases with Mockito for robust quality assurance
 
 ## 🎯 **Core Features**
 
@@ -16,13 +22,13 @@ A complete **Azure SRE demonstration** featuring a Spring Boot application with 
 - ✅ **Spring Boot Actuator** for health checks and metrics
 - ✅ **Lombok** for clean entity models
 
-### **Azure Monitoring Integration**
-- ✅ **Application Insights** - Real-time application telemetry and live metrics
-- ✅ **Log Analytics Workspace** - Centralized log management with KQL queries
-- ✅ **OpenTelemetry Java Agent** - Zero-code automatic instrumentation
-- ✅ **Custom Business Metrics** - Manual SDK integration (`products.retrieved`, `products.created`, `http.requests.total`)
-- ✅ **Distributed Tracing** - End-to-end request flow visibility with custom spans
-- ✅ **Structured Logging** - Business context logging for Azure Monitor
+### **Hybrid Telemetry Architecture**
+- ✅ **Application Insights Java Agent** - Automatic HTTP, database, JVM instrumentation
+- ✅ **OpenTelemetry SDK** - Custom business metrics integrated into ProductController
+- ✅ **Live Metrics** - Real-time performance monitoring with applicationinsights.json
+- ✅ **Custom Spans & Metrics** - Product operations, pricing analytics, category tracking
+- ✅ **Distributed Tracing** - End-to-end request flow with business context
+- ✅ **Log Analytics Workspace** - Centralized KQL queries and custom dashboards
 
 ### **Comprehensive Testing Suite (65+ Test Cases)**
 - ✅ **Unit Tests with Mockito**
@@ -84,8 +90,8 @@ Azure-SRE/
 ├── sredemo/                           # Main Spring Boot application
 │   ├── src/
 │   │   ├── main/java/com/project/webapp/
-│   │   │   ├── controller/            # REST API controllers
-│   │   │   ├── service/               # Business logic with custom telemetry
+│   │   │   ├── controller/            # REST API with integrated custom telemetry
+│   │   │   ├── service/               # Business logic layer
 │   │   │   ├── repository/            # Data access layer
 │   │   │   ├── model/                 # Entity models
 │   │   │   └── WebappApplication.java # Main application
@@ -99,7 +105,8 @@ Azure-SRE/
 │   ├── run-azure-app.bat              # Windows development runner
 │   ├── run-azure-app.sh               # Linux/VM application runner
 │   ├── deploy-to-vm.sh                # Complete VM deployment automation
-│   ├── opentelemetry-javaagent.jar    # Auto-instrumentation agent
+│   ├── applicationinsights-agent.jar  # Application Insights Java Agent
+│   ├── applicationinsights.json       # Live metrics configuration
 │   └── README.md                      # Detailed setup guide
 └── README.md                          # This project overview
 ```
@@ -205,11 +212,12 @@ mvn test -Dtest=*Integration* # Integration tests
 
 ## 📈 **Azure Monitoring & Observability**
 
-### **OpenTelemetry Integration**
-- **Hybrid Approach**: Combines automatic Java Agent instrumentation with manual SDK
-- **Custom Telemetry**: Business metrics tracked in service layer methods
-- **Distributed Tracing**: Full request lifecycle visibility across all application layers
-- **Performance Metrics**: Response times, throughput, error rates automatically collected
+### **Hybrid Telemetry Implementation**
+- **Application Insights Java Agent**: Automatic HTTP, database, JVM, and dependency tracking
+- **OpenTelemetry SDK**: Custom business metrics integrated directly in ProductController
+- **Live Metrics**: Real-time monitoring enabled via applicationinsights.json configuration
+- **Custom Business Analytics**: Product operations counter, pricing histogram, category tracking
+- **Distributed Tracing**: Custom spans for business operations with contextual attributes
 
 ### **Application Insights Features**
 - **Real-time Monitoring**: Live application performance metrics
@@ -217,11 +225,11 @@ mvn test -Dtest=*Integration* # Integration tests
 - **Custom Dashboards**: KQL-powered analytics and alerting
 - **Exception Tracking**: Automatic error detection and stack trace collection
 
-### **Monitoring Setup**
-1. **Application Insights** provides APM capabilities
-2. **Log Analytics Workspace** enables custom KQL queries  
-3. **OpenTelemetry Agent** handles automatic instrumentation
-4. **Custom Metrics** track business KPIs via manual SDK
+### **Telemetry Configuration**
+1. **applicationinsights-agent.jar** - Automatic instrumentation for HTTP/DB/JVM
+2. **applicationinsights.json** - Live metrics and role configuration
+3. **OpenTelemetry SDK** - Custom metrics embedded in ProductController business logic
+4. **Connection String** - Links Application Insights with Log Analytics Workspace
 
 ## 🔧 **DevOps & Deployment**
 
@@ -242,9 +250,9 @@ mvn test -Dtest=*Integration* # Integration tests
 ├── Java 21 installation
 ├── Maven setup  
 ├── Application compilation
-├── OpenTelemetry agent configuration
-├── Environment variable setup
-└── Application startup
+├── Application Insights agent configuration
+├── Environment variable setup (.env)
+└── Application startup with hybrid telemetry
 ```
 
 ---
