@@ -15,6 +15,7 @@ This repository demonstrates a production-ready Spring Boot application with **h
 ## 🎯 **Core Features**
 
 ### **Application Architecture**
+
 - ✅ **Spring Boot 3.x** with Java 21 runtime
 - ✅ **RESTful Product API** with full CRUD operations (`/api/products`)
 - ✅ **PostgreSQL Database** with persistence storage
@@ -23,6 +24,7 @@ This repository demonstrates a production-ready Spring Boot application with **h
 - ✅ **Lombok** for clean entity models
 
 ### **Hybrid Telemetry Architecture**
+
 - ✅ **Application Insights Java Agent** - Automatic HTTP, database, JVM instrumentation
 - ✅ **OpenTelemetry SDK** - Custom business metrics integrated into ProductController
 - ✅ **Live Metrics** - Real-time performance monitoring with applicationinsights.json
@@ -31,6 +33,7 @@ This repository demonstrates a production-ready Spring Boot application with **h
 - ✅ **Log Analytics Workspace** - Centralized KQL queries and custom dashboards
 
 ### **Comprehensive Testing Suite (65+ Test Cases)**
+
 - ✅ **Unit Tests with Mockito**
   - `ProductTest.java` - Entity validation and Lombok integration (15+ tests)
   - `ProductServiceTest.java` - Business logic with mocked dependencies (18+ tests)
@@ -43,6 +46,7 @@ This repository demonstrates a production-ready Spring Boot application with **h
 - ✅ **Automated Test Execution** with cross-platform scripts
 
 ### **DevOps & Deployment Automation**
+
 - ✅ **Cross-Platform Scripts** (Windows `.bat` & Linux `.sh`)
 - ✅ **Azure VM Deployment Automation** (`deploy-to-vm.sh`)
 - ✅ **Environment Configuration Management** with `.env.template`
@@ -74,46 +78,19 @@ This repository demonstrates a production-ready Spring Boot application with **h
 
 ## 🛠️ **Technology Stack**
 
-| Layer | Technology | Purpose |
-|-------|------------|---------|
-| **Runtime** | Java 21, Spring Boot 3.x | Modern Java application platform |
-| **Database** | PostgreSQL Database, Spring Data JPA | Lightweight persistence layer |
-| **Testing** | JUnit 5, Mockito, TestContainers | Comprehensive test coverage |
-| **Monitoring** | OpenTelemetry, Application Insights | Azure-native observability |
-| **Build** | Maven 3.x, Spring Boot Maven Plugin | Build automation and packaging |
-| **Deployment** | Bash/Batch Scripts, Azure VM | Cross-platform deployment |
-
-## 📊 **Project Structure**
-
-```
-Azure-SRE/
-├── sredemo/                           # Main Spring Boot application
-│   ├── src/
-│   │   ├── main/java/com/project/webapp/
-│   │   │   ├── controller/            # REST API with integrated custom telemetry
-│   │   │   ├── service/               # Business logic layer
-│   │   │   ├── repository/            # Data access layer
-│   │   │   ├── model/                 # Entity models
-│   │   │   └── WebappApplication.java # Main application
-│   │   ├── test/java/                 # Comprehensive test suite (65+ tests)
-│   │   └── resources/
-│   │       ├── application.properties # Production configuration
-│   │       └── static/ & templates/   # Web assets
-│   ├── .env.template                  # Secure credential template
-│   ├── .gitignore                     # Security-focused git exclusions
-│   ├── pom.xml                        # Maven dependencies + testing
-│   ├── run-azure-app.bat              # Windows development runner
-│   ├── run-azure-app.sh               # Linux/VM application runner
-│   ├── deploy-to-vm.sh                # Complete VM deployment automation
-│   ├── applicationinsights-agent.jar  # Application Insights Java Agent
-│   ├── applicationinsights.json       # Live metrics configuration
-│   └── README.md                      # Detailed setup guide
-└── README.md                          # This project overview
-```
+| Layer          | Technology                           | Purpose                          |
+| -------------- | ------------------------------------ | -------------------------------- |
+| **Runtime**    | Java 21, Spring Boot 3.x             | Modern Java application platform |
+| **Database**   | PostgreSQL Database, Spring Data JPA | Lightweight persistence layer    |
+| **Testing**    | JUnit 5, Mockito, TestContainers     | Comprehensive test coverage      |
+| **Monitoring** | OpenTelemetry, Application Insights  | Azure-native observability       |
+| **Build**      | Maven 3.x, Spring Boot Maven Plugin  | Build automation and packaging   |
+| **Deployment** | Bash/Batch Scripts, Azure VM         | Cross-platform deployment        |
 
 ## 🚀 **Quick Start**
 
 ### **Local Development**
+
 ```bash
 # Windows
 cd sredemo
@@ -126,6 +103,7 @@ chmod +x run-azure-app.sh
 ```
 
 ### **Azure VM Deployment**
+
 ```bash
 # 1. SSH into your Azure VM
 # 2. Clone this repository
@@ -146,18 +124,20 @@ nano .env
 ## ⚙️ **Configuration Requirements**
 
 ### **Required Azure Resources**
+
 1. **Application Insights** instance with connection string
 2. **Log Analytics Workspace** (linked to Application Insights)
 3. **Azure VM** with Java 21 and Maven
 
 ### **Environment Variables**
+
 Copy `.env.template` to `.env` and configure:
 
 ```bash
 # Azure Application Insights
 APPLICATIONINSIGHTS_CONNECTION_STRING=InstrumentationKey=xxx...
 
-# Azure Log Analytics Workspace  
+# Azure Log Analytics Workspace
 LOG_ANALYTICS_WORKSPACE_ID=your-workspace-id
 LOG_ANALYTICS_WORKSPACE_KEY=your-workspace-key
 
@@ -171,11 +151,12 @@ SPRING_PROFILES_ACTIVE=production
 This project features a **comprehensive 65+ test suite** implementing industry best practices:
 
 ### **Testing Architecture**
+
 ```
 Test Coverage Strategy
 ├── Unit Tests (45+ tests)
 │   ├── Entity Layer: ProductTest.java (15+ tests)
-│   ├── Service Layer: ProductServiceTest.java (18+ tests) 
+│   ├── Service Layer: ProductServiceTest.java (18+ tests)
 │   ├── Controller Layer: ProductControllerTest.java (20+ tests)
 │   └── Repository Layer: ProductRepoTest.java (12+ tests)
 └── Integration Tests (8+ tests)
@@ -183,6 +164,7 @@ Test Coverage Strategy
 ```
 
 ### **Testing Technologies**
+
 - **JUnit 5**: Modern testing framework with parameterized tests
 - **Mockito**: Mock objects for isolated unit testing
 - **TestContainers**: Real database integration testing
@@ -190,6 +172,7 @@ Test Coverage Strategy
 - **Spring Boot Test**: Application context and web layer testing
 
 ### **Key Testing Features**
+
 - **Mock Dependency Injection**: Service layer tests with `@Mock` and `@InjectMocks`
 - **Database Testing**: Real PostgreSQL database integration with `@DataJpaTest`
 - **REST API Validation**: Complete HTTP endpoint testing with MockMvc
@@ -197,6 +180,7 @@ Test Coverage Strategy
 - **Cross-Platform Execution**: Windows (`run-tests.bat`) and Linux (`run-tests.sh`) scripts
 
 ### **Run Test Suite**
+
 ```bash
 # Run all tests with coverage
 mvn clean test
@@ -213,6 +197,7 @@ mvn test -Dtest=*Integration* # Integration tests
 ## 📈 **Azure Monitoring & Observability**
 
 ### **Hybrid Telemetry Implementation**
+
 - **Application Insights Java Agent**: Automatic HTTP, database, JVM, and dependency tracking
 - **OpenTelemetry SDK**: Custom business metrics integrated directly in ProductController
 - **Live Metrics**: Real-time monitoring enabled via applicationinsights.json configuration
@@ -220,12 +205,14 @@ mvn test -Dtest=*Integration* # Integration tests
 - **Distributed Tracing**: Custom spans for business operations with contextual attributes
 
 ### **Application Insights Features**
+
 - **Real-time Monitoring**: Live application performance metrics
 - **Application Map**: Visual service dependency mapping
 - **Custom Dashboards**: KQL-powered analytics and alerting
 - **Exception Tracking**: Automatic error detection and stack trace collection
 
 ### **Telemetry Configuration**
+
 1. **applicationinsights-agent.jar** - Automatic instrumentation for HTTP/DB/JVM
 2. **applicationinsights.json** - Live metrics and role configuration
 3. **OpenTelemetry SDK** - Custom metrics embedded in ProductController business logic
@@ -234,21 +221,24 @@ mvn test -Dtest=*Integration* # Integration tests
 ## 🔧 **DevOps & Deployment**
 
 ### **Cross-Platform Support**
+
 - **Windows Development**: `run-azure-app.bat` for local testing
 - **Linux Production**: `run-azure-app.sh` for VM deployment
 - **Automated VM Setup**: `deploy-to-vm.sh` handles complete environment configuration
 
 ### **Security Features**
+
 - **Environment Templates**: `.env.template` prevents credential exposure
 - **Git Security**: `.gitignore` excludes sensitive files and dependencies
 - **Secure Deployment**: Credentials injected at runtime, never committed
 
 ### **Deployment Automation**
+
 ```bash
 # Complete VM deployment pipeline
 ./deploy-to-vm.sh
 ├── Java 21 installation
-├── Maven setup  
+├── Maven setup
 ├── Application compilation
 ├── Application Insights agent configuration
 ├── Environment variable setup (.env)
@@ -264,11 +254,13 @@ mvn test -Dtest=*Integration* # Integration tests
 ## Part 1: Azure Built-in Logs, Metrics, and Dashboards
 
 ### Objective
+
 Deploy a Java Spring Boot application on an Azure VM, configure diagnostic settings to collect logs, monitor metrics, create a custom dashboard, and set up metric-based and log-query-based alerts.
 
 ### Steps
 
 1. **Provision Azure VM**:
+
    - Create VM in East US (Ubuntu 22.04, Standard_D2s_v3).
    - Enable public IP, open ports 80 (HTTP), 8080 (Spring Boot).
    - _Screenshot: VM creation confirmation._
@@ -276,8 +268,9 @@ Deploy a Java Spring Boot application on an Azure VM, configure diagnostic setti
 2. **Deploy Spring Boot Application**:
    ```bash
    sudo apt update
-   sudo apt install openjdk-17-jdk maven -y
+   sudo apt install openjdk-21-jdk maven -y
    git clone <repository-url>
    cd <repository-folder>
    mvn clean package
    java -jar target/<app-name>.jar
+   ```
